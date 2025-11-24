@@ -59,11 +59,11 @@ console.log(formatted); // "00:03:18"
 
   const newTitle = title.slice(0, 105);
   if (avatar.length === 0) {
-    return <div className="bg-purple-300 max-w-116 mx-2 flex flex-col mb-8 p-2">Loading</div>;
+    return <div className="bg-gray-600 max-w-116 w-full aspect-video mx-2 flex justify-center items-center text-white font-semibold flex-col mb-8 p-2 rounded-2xl">Loading</div>;
   }
 
   return (
-    <div className="bg-yellow-400 max-w-116 mx-2 flex flex-col mb-8 p-2 hover:bg-gray-400 rounded-xl transition-all group">
+    <div className="bg-green-400 max-w-116 mx-2 flex flex-col mb-8 p-2 hover:bg-gray-400 rounded-xl transition-all group">
       <div className="pb-3 relative">
         <img src={thumbnails.high.url} alt="vCard" className="rounded-2xl group-hover:rounded-none transition-all"/>
         <span className="bg-black/70 text-white absolute bottom-14 font-semibold px-2 py-0.5 rounded-lg right-2">{formatted}</span>
