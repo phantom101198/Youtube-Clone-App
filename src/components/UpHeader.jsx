@@ -13,6 +13,7 @@ import { RiAddLargeLine } from "react-icons/ri";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { FaCircleUser } from "react-icons/fa6";
 import { FiSearch } from "react-icons/fi";
+import { Link } from "react-router-dom";
 
 const UpHeader = () => {
   return (
@@ -23,11 +24,14 @@ const UpHeader = () => {
           <FiMenu className="text-2xl" />
         </div>
 
-        <div className=" py-4.5 pl-4 pr-3.5 flex-none">
+        
+        <div className=" py-4.5 pl-4 pr-3.5 flex-none cursor-pointer">
+          <Link to={"/"}>
           <img
             src="https://cdn2.steamgriddb.com/logo_thumb/a10bf158bd72fc032e9461982f9d2a38.png"
             className="w-[93px] h-5"
           />
+          </Link>
         </div>
       </div>
 
