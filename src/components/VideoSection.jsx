@@ -13,16 +13,17 @@ const VideoSection = () => {
   const getVideos = async () => {
     const data = await fetch(YOUTUBE_API + API_KEY);
     const json = await data.json();
-    console.log(json.items);
+    // console.log(json.items);
     setVideoList(json.items);
+    // console.log(videoList);
   };
 
   if (videoList.length === 0) return <div className="bg-pink-300">Shimmer</div>;
 
   return (
-    <div className="pt-6 px-1 md:px-2 pl-3.5 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-[repeat(auto-fit,minmax(450px,1fr))] flex-1 bg-blue-400 w-full self-center">
+    <div className="pt-6 px-1 md:px-2 pl-3.5 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-[repeat(auto-fit,minmax(450  px,1fr))] flex-1 bg-blue-400 w-full self-center">
       {videoList.map((item) => (
-        <Link to={"/watch?v=" + item.id} className="flex w-full">
+        <Link to={"/watch?v=" + item.id} className="flex w-full" key={item.id}>
           <VideoCard info={item} key={item.id} />
         </Link>
       ))}

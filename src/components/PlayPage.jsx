@@ -1,8 +1,21 @@
-import React from "react";
-import { useSearchParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 
 const PlayPage = () => {
+
+  useEffect(() => {
+    if(info.selectedVideoData === null ) navigate("/");
+  },[])
+
   const [searchParams] = useSearchParams();
+
+  const info = useSelector(store => store.selectedVideo);
+  const navigate = useNavigate();
+
+  // if(info.selectedVideoData === null ) navigate("/");
+
+  console.log("play info", info);
 
   return (
     <div className="ml-6  max-w-[853px] w-full bg-amber-300 overflow-x-hidden">

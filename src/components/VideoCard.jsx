@@ -2,15 +2,24 @@ import { RxDotFilled } from "react-icons/rx";
 import { CiMenuKebab } from "react-icons/ci";
 import { useEffect, useState } from "react";
 import { API_KEY } from "../Utils/Constants";
+import { useDispatch } from "react-redux";
+import { addSelectedVideoDetail } from "../Utils/SelectedVideoSlice";
 
 const VideoCard = ({ info }) => {
   const [avatar, setAvatar] = useState([]);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getAvatar();
   }, []);
 
   const getAvatar = async () => {
+    // try {
+
+    // } catch (error) {
+
+    // }
     const data = await fetch(
       "https://www.googleapis.com/youtube/v3/channels?part=snippet&id=" +
         channelId +
@@ -22,51 +31,68 @@ const VideoCard = ({ info }) => {
     setAvatar(json);
   };
 
-    function parseISODuration(isoDuration) {
-  const match = isoDuration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
+  const handleVideoClick = () => {
+    if (info) {
+      dispatch(addSelectedVideoDetail(info));
+    }
+  };
 
-  const hours = parseInt(match[1] || 0, 10);
-  const minutes = parseInt(match[2] || 0, 10);
-  const seconds = parseInt(match[3] || 0, 10);
+  function parseISODuration(isoDuration) {
+    const match = isoDuration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
 
-  return { hours, minutes, seconds };
-}
+    const hours = parseInt(match[1] || 0, 10);
+    const minutes = parseInt(match[2] || 0, 10);
+    const seconds = parseInt(match[3] || 0, 10);
 
-function formatDurationSmart(duration) {
-  const h = duration.hours;
-  const m = String(duration.minutes).padStart(2, '0');
-  const s = String(duration.seconds).padStart(2, '0');
-
-  // If hours is zero → skip it
-  if (h === 0) {
-    return `${m}:${s}`;
+    return { hours, minutes, seconds };
   }
 
-  // Otherwise show full h:mm:ss
-  return `${h}:${m}:${s}`;
-}
+  function formatDurationSmart(duration) {
+    const h = duration.hours;
+    const m = String(duration.minutes).padStart(2, "0");
+    const s = String(duration.seconds).padStart(2, "0");
 
+    // If hours is zero → skip it
+    if (h === 0) {
+      return `${m}:${s}`;
+    }
 
-const { snippet, contentDetails } = info;
-const { channelTitle, thumbnails, title, channelId } = snippet;
+    // Otherwise show full h:mm:ss
+    return `${h}:${m}:${s}`;
+  }
 
+  const { snippet, contentDetails } = info;
+  const { channelTitle, thumbnails, title, channelId } = snippet;
 
-const input = contentDetails.duration;
-const duration = parseISODuration(input);
-const formatted = formatDurationSmart(duration);
+  const input = contentDetails.duration;
+  const duration = parseISODuration(input);
+  const formatted = formatDurationSmart(duration);
 
-console.log(formatted); // "00:03:18"
+  // console.log(formatted); // "00:03:18"
 
   const newTitle = title.slice(0, 105);
   if (avatar.length === 0) {
-    return <div className="bg-gray-600 max-w-116 w-full aspect-video mx-2 flex justify-center items-center text-white font-semibold flex-col mb-8 p-2 rounded-2xl">Loading</div>;
+    return (
+      <div className="bg-gray-600 max-w-116 w-full aspect-video mx-2 flex justify-center items-center text-white font-semibold flex-col mb-8 p-2 rounded-2xl">
+        Loading
+      </div>
+    );
   }
 
   return (
-    <div className="bg-green-400 max-w-116 mx-2 flex flex-col mb-8 p-2 hover:bg-gray-400 rounded-xl transition-all group">
+    <div
+      className="bg-green-400 max-w-116 mx-2 flex flex-col mb-8 p-2 hover:bg-gray-400 rounded-xl transition-all group"
+      onClick={handleVideoClick}
+    >
       <div className="pb-3 relative">
-        <img src={thumbnails.high.url} alt="vCard" className="rounded-2xl group-hover:rounded-none transition-all"/>
-        <span className="bg-black/70 text-white absolute bottom-14 font-semibold px-2 py-0.5 rounded-lg right-2">{formatted}</span>
+        <img
+          src={thumbnails.high.url}
+          alt="vCard"
+          className="rounded-2xl group-hover:rounded-none transition-all"
+        />
+        <span className="bg-black/70 text-white absolute bottom-14 font-semibold px-2 py-0.5 rounded-lg right-2">
+          {formatted}
+        </span>
       </div>
       <div className="flex justify-between px-2">
         <div className="mr-3">

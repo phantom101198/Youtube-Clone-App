@@ -25,7 +25,7 @@ const CategoryBar = () => {
   // ];
 
   const list = SOFTWARE_ENGINEER_CATEGORIES;
-  console.log(list);
+  // console.log(list);
   return (
     <div className="w-full min-w-0 flex bg-cyan-400 px-6 overflow-x-auto overflow-y-hidden no-scrollbar scroll-smooth">
       {list.map((item) => (
